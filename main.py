@@ -24,6 +24,26 @@ def _add_items(w, data, parent=''):
     
     return res
 
+def _filter(data, keys):
+    if isinstance(data, list):
+        res = [_filter(obj, keys) for obj in data]
+        res = [obj for obj in res if obj]
+
+        return res
+
+    elif isinstance(data, dict):
+        res = {}
+
+        for k, v in data.iteritems():
+            if k in keys:
+                res[k] = v
+            else:
+                v = _filter(v, keys)
+                if v:
+                    res[k] = v
+
+        return res
+
 class MainApp(Tk):
     def __init__(self, data):
         Tk.__init__(self, None)
@@ -81,6 +101,10 @@ class ReceiveDataApp(Tk):
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         data = load_file(sys.argv[1])
+
+        if len(sys.argv) > 2:
+            data = _filter(data, sys.argv[2].split(','))
+
         MainApp(data).mainloop()
 
     else:
