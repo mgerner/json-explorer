@@ -2,6 +2,8 @@ import json
 from Tkinter import *
 import ttk
 
+import conf
+
 def _add_items(w, data, parent=''):
     res = {}
 
@@ -47,7 +49,7 @@ class MainApp(Tk):
     def __init__(self, data):
         Tk.__init__(self, None)
 
-        self.title('JSON Explorer')
+        self.title(conf.TITLE)
 
         # create first layout level (a frame and a text element)
         self.grid()

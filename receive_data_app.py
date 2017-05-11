@@ -3,12 +3,13 @@ from Tkinter import *
 import ttk
 
 import main_app
+import conf
 
 class ReceiveDataApp(Tk):
     def __init__(self):
         Tk.__init__(self, None)
 
-        self.title('JSON Explorer')
+        self.title(conf.TITLE)
 
         self.grid()
         self.grid_columnconfigure(0, weight=1)
@@ -27,4 +28,8 @@ class ReceiveDataApp(Tk):
         self.destroy()
 
     def run(self):
+        self.focus_force()
+        self.lift()
+        self.attributes('-topmost', True)
+        self.after_idle(self.attributes, '-topmost', False)
         self.root.mainloop()
