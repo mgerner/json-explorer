@@ -16,13 +16,16 @@ class ReceiveDataApp(Tk):
         self.grid_columnconfigure(1, weight=0)
         self.grid_rowconfigure(0, weight=1)
 
-        button = Button(self, text='OK', command=self.clicked)
+        button = Button(self, text='OK', command=self.parse)
         button.grid(row=1, column=0, sticky=NSEW)
         
         self.text = Text(self)
         self.text.grid(row=0, column=0, sticky=NSEW)
 
-    def clicked(self):
+        self.bind_all('<Control-Key-Return>', self.parse)
+        self.bind_all('<Command-Key-Return>', self.parse)
+
+    def parse(self, _event=None):
         data = json.loads(self.text.get(1.0, END))
         main_app.MainApp(data).run()
         self.destroy()

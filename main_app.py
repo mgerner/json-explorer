@@ -83,6 +83,19 @@ class MainApp(Tk):
         self.original_data = data
         self.filter(None)
 
+        # set keyboard shortcuts
+        self.bind_all('<Control-Key-n>', self.new_window)
+        self.bind_all('<Command-Key-n>', self.new_window)
+        self.bind_all('<Control-Key-c>', self.copy_node)
+        self.bind_all('<Command-Key-c>', self.copy_node)
+
+    def new_window(self, _event):
+        import receive_data_app
+        receive_data_app.ReceiveDataApp().run()
+    
+    def copy_node(self, _event):
+        self.clipboard_clear()
+        self.clipboard_append(self.text.get("1.0", END))
 
     def filter(self, _event):
         if not self.filter_box.get().strip():
