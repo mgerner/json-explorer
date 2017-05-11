@@ -1,11 +1,6 @@
-import sys
 import json
 from Tkinter import *
 import ttk
-
-def load_file(fn):
-    with open(fn) as f:
-        return json.loads(f.read())
 
 def _add_items(w, data, parent=''):
     res = {}
@@ -126,40 +121,3 @@ class MainApp(Tk):
         self.attributes('-topmost', True)
         self.after_idle(self.attributes, '-topmost', False)
         self.mainloop()
-
-class ReceiveDataApp(Tk):
-    def __init__(self):
-        Tk.__init__(self, None)
-
-        self.title('JSON Explorer')
-
-        self.grid()
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=0)
-        self.grid_rowconfigure(0, weight=1)
-
-        button = Button(self, text='OK', command=self.clicked)
-        button.grid(row=1, column=0, sticky=NSEW)
-        
-        self.text = Text(self)
-        self.text.grid(row=0, column=0, sticky=NSEW)
-
-    def clicked(self):
-        data = json.loads(self.text.get(1.0, END))
-        MainApp(data).mainloop()
-        self.destroy()
-
-    def run(self):
-        self.root.mainloop()
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        data = load_file(sys.argv[1])
-
-        if len(sys.argv) > 2:
-            data = _filter(data, sys.argv[2].split(','))
-
-        MainApp(data).run()
-
-    else:
-        ReceiveDataApp().mainloop()
