@@ -27,8 +27,8 @@ class ReceiveDataApp(Tk):
 
     def parse(self, _event=None):
         data = json.loads(self.text.get(1.0, END))
-        main_app.MainApp(data).run()
         self.destroy()
+        main_app.MainApp(data).run()
 
     def run(self):
         self.focus_force()
