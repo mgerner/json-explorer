@@ -32,4 +32,4 @@ class ReceiveDataApp(Tk):
         self.lift()
         self.attributes('-topmost', True)
         self.after_idle(self.attributes, '-topmost', False)
-        self.root.mainloop()
+        self.mainloop()
