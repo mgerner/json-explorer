@@ -52,6 +52,8 @@ class MainApp(Tk):
     def __init__(self, data):
         Tk.__init__(self, None)
 
+        self.title('JSON Explorer')
+
         # create first layout level (a frame and a text element)
         self.grid()
 
@@ -128,6 +130,8 @@ class MainApp(Tk):
 class ReceiveDataApp(Tk):
     def __init__(self):
         Tk.__init__(self, None)
+
+        self.title('JSON Explorer')
 
         self.grid()
         self.grid_columnconfigure(0, weight=1)
