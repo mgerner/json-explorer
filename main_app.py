@@ -101,6 +101,8 @@ class MainApp(Tk):
 
     def set_filter_focus(self, _event):
         self.filter_box.focus()
+        self.filter_box.select_range(0, END)
+        self.filter_box.icursor(END)
 
     def filter(self, _event):
         if not self.filter_box.get().strip():
