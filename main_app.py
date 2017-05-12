@@ -88,6 +88,8 @@ class MainApp(Tk):
         self.bind_all('<Command-Key-n>', self.new_window)
         self.bind_all('<Control-Key-c>', self.copy_node)
         self.bind_all('<Command-Key-c>', self.copy_node)
+        self.bind_all('<Control-Key-f>', self.set_filter_focus)
+        self.bind_all('<Command-Key-f>', self.set_filter_focus)
 
     def new_window(self, _event):
         import receive_data_app
@@ -96,6 +98,9 @@ class MainApp(Tk):
     def copy_node(self, _event):
         self.clipboard_clear()
         self.clipboard_append(self.text.get("1.0", END))
+
+    def set_filter_focus(self, _event):
+        self.filter_box.focus()
 
     def filter(self, _event):
         if not self.filter_box.get().strip():
