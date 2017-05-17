@@ -12,7 +12,7 @@ def _load_file(fn):
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        data = _load_file(sys.argv[1])
+        data = json.loads(sys.stdin.read()) if sys.argv[1] == '-' else _load_file(sys.argv[1])
         main_app.MainApp(data).run()
 
     else:
