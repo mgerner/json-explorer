@@ -55,26 +55,30 @@ class MainApp(Tk):
         self.grid()
 
         f = Frame(self)
+        f.grid(row=0, column=0, sticky=NSEW)
 
         self.text = Text(self)
-        self.text.config(state=DISABLED)
+        if not conf.EDITOR_ENABLED:
+            self.text.config(state=DISABLED)
 
-        f.grid(row=0, column=0, sticky=NSEW)
         self.text.grid(row=0, column=1, sticky=NSEW)
+
         self.grid_columnconfigure(0, weight=0)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
         # create the layout of the frame
         self.tree = ttk.Treeview(f)
+        self.tree.grid(row=1, column=0, sticky=NSEW)
         self.tree.bind('<<TreeviewSelect>>', self.selected)
+        self.tree.bind('<Control-Key-c>', self.copy_node)
+        self.tree.bind('<Command-Key-c>', self.copy_node)
 
         self.filter_box = Entry(f)
-        self.filter_box.bind('<Return>', self.filter)
         self.filter_box.pack()
-
         self.filter_box.grid(row=0, column=0, sticky=NSEW)
-        self.tree.grid(row=1, column=0, sticky=NSEW)
+        self.filter_box.bind('<Return>', self.filter)
+
         f.grid_columnconfigure(0, weight=1)
         f.grid_rowconfigure(0, weight=0)
         f.grid_rowconfigure(1, weight=1)
@@ -83,11 +87,9 @@ class MainApp(Tk):
         self.original_data = data
         self.filter(None)
 
-        # set keyboard shortcuts
+        # set global keyboard shortcuts
         self.bind_all('<Control-Key-n>', self.new_window)
         self.bind_all('<Command-Key-n>', self.new_window)
-        self.bind_all('<Control-Key-c>', self.copy_node)
-        self.bind_all('<Command-Key-c>', self.copy_node)
         self.bind_all('<Control-Key-f>', self.set_filter_focus)
         self.bind_all('<Command-Key-f>', self.set_filter_focus)
 
@@ -132,10 +134,12 @@ class MainApp(Tk):
         if selected not in self.cache:         
             self.cache[selected] = json.dumps(self.mappings[selected], indent=2)
 
-        self.text.config(state=NORMAL)
+        if not conf.EDITOR_ENABLED:
+            self.text.config(state=NORMAL)
         self.text.delete(1.0, END)
         self.text.insert(END, self.cache[selected])
-        self.text.config(state=DISABLED)
+        if not conf.EDITOR_ENABLED:
+            self.text.config(state=DISABLED)
 
     def run(self):
         self.focus_force()
