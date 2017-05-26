@@ -53,19 +53,20 @@ class MainApp(Tk):
 
         # create first layout level (a frame and a text element)
         self.grid()
+        self.grid_columnconfigure(0, weight=0)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
         f = Frame(self)
         f.grid(row=0, column=0, sticky=NSEW)
+        f.grid_columnconfigure(0, weight=1)
+        f.grid_rowconfigure(0, weight=0)
+        f.grid_rowconfigure(1, weight=1)
 
         self.text = Text(self)
         if not conf.EDITOR_ENABLED:
             self.text.config(state=DISABLED)
-
         self.text.grid(row=0, column=1, sticky=NSEW)
-
-        self.grid_columnconfigure(0, weight=0)
-        self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure(0, weight=1)
 
         # create the layout of the frame
         self.tree = ttk.Treeview(f)
@@ -78,10 +79,6 @@ class MainApp(Tk):
         self.filter_box.pack()
         self.filter_box.grid(row=0, column=0, sticky=NSEW)
         self.filter_box.bind('<Return>', self.filter)
-
-        f.grid_columnconfigure(0, weight=1)
-        f.grid_rowconfigure(0, weight=0)
-        f.grid_rowconfigure(1, weight=1)
 
         # set the data that should be used, and trigger the population of the controls
         self.original_data = data
