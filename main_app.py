@@ -129,7 +129,7 @@ class MainApp(Tk):
     def selected(self, _event):
         selected = self.tree.selection()[0]
         if selected not in self.cache:         
-            self.cache[selected] = json.dumps(self.mappings[selected], indent=2)
+            self.cache[selected] = json.dumps(self.mappings[selected], indent=2, sort_keys=True)
 
         if not conf.EDITOR_ENABLED:
             self.text.config(state=NORMAL)
