@@ -76,7 +76,6 @@ class MainApp(Tk):
         self.tree.bind('<Command-Key-c>', self.copy_node)
 
         self.filter_box = Entry(f)
-        self.filter_box.pack()
         self.filter_box.grid(row=0, column=0, sticky=NSEW)
         self.filter_box.bind('<Return>', self.filter)
 
