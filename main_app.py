@@ -14,8 +14,10 @@ def _add_items(w, data, parent=''):
         for i, obj in enumerate(data):
             cid = w.insert(parent, 'end', text='[%i]' % i)
             res.update(_add_items(w, obj, cid))
+
     elif isinstance(data, dict):
-        for k, v in data.iteritems():
+        for k in sorted(data.keys()):
+            v = data[k]
             cid = w.insert(parent, 'end', text=k)
             res.update(_add_items(w, v, cid))
     
